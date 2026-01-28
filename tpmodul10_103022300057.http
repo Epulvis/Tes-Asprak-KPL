@@ -1,0 +1,27 @@
+@tpmodul10_103022300057_HostAddress = http://localhost:5185
+
+### Get all Mahasiswa
+GET {{tpmodul10_103022300057_HostAddress}}/api/mahasiswa
+Accept: application/json
+
+### Get Mahasiswa by index (0)
+GET {{tpmodul10_103022300057_HostAddress}}/api/mahasiswa/0
+Accept: application/json
+
+### Get Mahasiswa by index (1)
+GET {{tpmodul10_103022300057_HostAddress}}/api/mahasiswa/1
+Accept: application/json
+
+### Add new Mahasiswa
+POST {{tpmodul10_103022300057_HostAddress}}/api/mahasiswa
+Content-Type: application/json
+
+{
+  "Nama": "Michael Jordan",
+  "Nim": "1302000003"
+}
+
+### Delete Mahasiswa by index (2)
+DELETE {{tpmodul10_103022300057_HostAddress}}/api/mahasiswa/2
+
+###
