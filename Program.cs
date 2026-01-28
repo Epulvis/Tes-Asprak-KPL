@@ -1,43 +1,43 @@
-var builder = WebApplication.CreateBuilder(args);
+using System;
 
-// Add services to the container.
-
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.PropertyNamingPolicy = null;
-    });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// Add CORS
-builder.Services.AddCors(options =>
+namespace RefactoringGuru.DesignPatterns.Singleton.Conceptual.NonThreadSafe
 {
-    options.AddDefaultPolicy(policy =>
+    public sealed class Singleton
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
 
-var app = builder.Build();
+        private Singleton() { }
+        private static Singleton _instance;
+        public static Singleton GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new Singleton();
+            }
+            return _instance;
+        }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        public void someBusinessLogic()
+        {
+            Console.WriteLine("Some business logic here.");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // The client code.
+            Singleton s1 = Singleton.GetInstance();
+            Singleton s2 = Singleton.GetInstance();
+
+            if (s1 == s2)
+            {
+                Console.WriteLine("Singleton works, both variables contain the same instance.");
+            }
+            else
+            {
+                Console.WriteLine("Singleton failed, variables contain different instances.");
+            }
+        }
+    }
 }
-
-app.UseHttpsRedirection();
-
-// Enable CORS
-app.UseCors();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
